@@ -7,8 +7,13 @@
     <title>Document</title>
 </head>
 <body>
-    Home page
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum quod vitae reprehenderit labore porro magnam cumque alias dolorem. Delectus voluptatum perferendis sapiente et cupiditate reiciendis facere itaque, ullam doloribus nobis.</p>
+    {% if user.is_authenticated %}
+        <h1>Home page for {{ user }}</h1>
+    {% else %}
+        <h1>Home page</h1>
+    {% endif %}
     
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum quod vitae reprehenderit labore porro magnam cumque alias dolorem. Delectus voluptatum perferendis sapiente et cupiditate reiciendis facere itaque, ullam doloribus nobis.</p>
+
 </body>
 </html>
