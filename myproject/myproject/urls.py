@@ -10,7 +10,7 @@ urlpatterns = [
     path('num_page/<int:number>/', from_num, name='from_num'),
     path('shano/', load_shano_page, name='shano'),
 
-    path('home_view/', pages.home_view, name='home_view'),
-    path('contact_view', pages.contact_view, name='contact_view'),
-    path('about_view', pages.contact_view, name='about_view'),
+    path('home/', pages.home_view, name='home_view'),
+    path('contact/', pages.contact_view, name='contact_view'),
+    path('about/', pages.about_view, name='about_view'),
 ]

@@ -1,10 +1,11 @@
 from django.shortcuts import render
+from datetime import datetime
 
 
 def home_view(request, *args, **kwargs):
-    print(request.user)
     # return HttpResponse("<h1>Home view page</h1>")
-    return render(request, 'pages/home.html', {'user': request.user})
+    data = datetime.now()
+    return render(request, 'pages/home.html', {'user': request.user, 'data': data})
 
 
 def contact_view(request, *args, **kwargs):
