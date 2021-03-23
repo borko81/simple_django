@@ -32,3 +32,11 @@ ul > li > a:hover {
     border-top: 1px solid blueviolet;
     border-bottom: 1px solid blueviolet;
 }
+
+.lastitem {
+    float: right;
+}
+
+.lastitem > a {
+    color: blueviolet;
+}
