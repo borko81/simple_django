@@ -11,6 +11,11 @@
 <body>
     {% block body %}
         <h1>Contact Page</h1>
+        {% if email|slice:4 == '<h1>' %} 
+            {{ email|safe }}
+        {% else %}
+            {{ email|striptags }}
+        {% endif %}
     {% endblock body %}
 </body>
 </html>

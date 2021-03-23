@@ -15,7 +15,11 @@ def home_view(request, *args, **kwargs):
 
 def contact_view(request, *args, **kwargs):
     # return HttpResponse("<h1>Contact view page</h1>")
-    return render(request, 'pages/contact.html', {})
+    email = '<h1>korea60@abv.bg</h1>'
+    data = {
+        'email': email
+    }
+    return render(request, 'pages/contact.html', data)
 
 
 def about_view(request, *args, **kwargs):
