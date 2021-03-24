@@ -7,3 +7,9 @@ class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = 'title description price'.split()
+
+
+class RawProductForm(forms.Form):
+    title = forms.CharField()
+    description = forms.CharField()
+    price = forms.DecimalField()
