@@ -2,8 +2,8 @@
 
 {% block body %}
     <form action="" method="POST">
-    {% csrf_token %}
-        {{ form.as_p }}
+        {% csrf_token %}
+        <input type="text" name='title' placeholder="your title">
         <input type="submit" value="Save">
     </form>
 {% endblock body %}
