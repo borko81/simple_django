@@ -6,7 +6,7 @@ class Product(models.Model):
     description = models.TextField(blank=True, null=True)
     price = models.DecimalField(decimal_places=2, max_digits=100)
     summary = models.TextField(default="This is cool!")
-    valid = models.BooleanField()
+    valid = models.BooleanField(default=True)
 
     def __str__(self) -> str:
         return self.title
