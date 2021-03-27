@@ -1,4 +1,5 @@
-from django.shortcuts import render, get_object_or_404
+from django.http.response import HttpResponse, HttpResponseRedirect
+from django.shortcuts import redirect, render, get_object_or_404
 
 from .models import Product
 from .forms import ProductForm, RawProductForm
@@ -19,16 +20,18 @@ def product_detail_view(request, id):
     return render(request, 'product/detail.html', context)
 
 
-# def product_new(request):
-#     form = ProductForm(request.POST or None)
-#     if form.is_valid():
-#         form.save()
-#         form = ProductForm()
+def product_new(request):
+    """ Pure django forms, redirect after success """
+    form = ProductForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        form = ProductForm()
+        return redirect(product_new)
 
-#     context = {
-#         'form': form
-#     }
-#     return render(request, 'product/new_product.html', context)
+    context = {
+        'form': form
+    }
+    return render(request, 'product/new_product.html', context)
 
 
 # def product_new(request):
@@ -40,13 +43,13 @@ def product_detail_view(request, id):
 #     return render(request, 'product/new_product.html', context)
 
 
-def product_new(request):
-    """ Pure django forms """
-    pure_form = RawProductForm()
-    if request.method == 'POST':
-        pure_form = RawProductForm(request.POST)
-        if pure_form.is_valid():
-            Product.objects.create(**pure_form.cleaned_data)
-            pure_form = RawProductForm()
-    context = {'form': pure_form}
-    return render(request, 'product/new_product.html', context)
+# def product_new(request):
+#     """ Pure django forms """
+#     pure_form = RawProductForm()
+#     if request.method == 'POST':
+#         pure_form = RawProductForm(request.POST)
+#         if pure_form.is_valid():
+#             Product.objects.create(**pure_form.cleaned_data)
+#             pure_form = RawProductForm()
+#     context = {'form': pure_form}
+#     return render(request, 'product/new_product.html', context)
