@@ -2,7 +2,7 @@ from django import forms
 
 from .models import Product
 
-not_allowed_symbol = '@!^[]-'
+NOT_ALLOWED_SYMOBOL = '@!^[]-'
 
 
 class ProductForm(forms.ModelForm):
@@ -17,7 +17,7 @@ class ProductForm(forms.ModelForm):
     def clean_title(self):
         """ Validate title check if any symbol is not alowed """
         title = self.cleaned_data.get('title')
-        if any(i in title for i in not_allowed_symbol):
+        if any(i in title for i in NOT_ALLOWED_SYMOBOL):
             raise forms.ValidationError(f"{title} not allowed by name")
         return title.title()
 

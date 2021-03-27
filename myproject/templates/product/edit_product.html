@@ -1,0 +1,10 @@
+{% extends 'pages/base.html' %}
+
+{% block body %}
+    <h3>Edit form</h3>
+    <form action="" method="POST">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <input type="submit" value='Edit'>
+    </form>
+{% endblock body %}

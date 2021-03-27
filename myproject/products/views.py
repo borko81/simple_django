@@ -1,8 +1,7 @@
-from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render, get_object_or_404
 
 from .models import Product
-from .forms import ProductForm, RawProductForm
+from .forms import ProductForm
 
 
 def error_404(request, exception):
@@ -10,8 +9,8 @@ def error_404(request, exception):
     return render(request, '404.html', data)
 
 
-def product_detail_view(request, id):
-    obj = get_object_or_404(Product, id=id)
+def product_detail_view(request, product_id):
+    obj = get_object_or_404(Product, id=product_id)
     context = {
         'title': obj.title,
         'description': obj.description,
@@ -53,3 +52,23 @@ def product_new(request):
 #             pure_form = RawProductForm()
 #     context = {'form': pure_form}
 #     return render(request, 'product/new_product.html', context)
+
+def edit_product(request, product_id):
+    obj = Product.objects.get(id=product_id)
+    form = ProductForm(request.POST or None, instance=obj)
+    if form.is_valid():
+        form.save()
+        return redirect(view_all_product)
+    content = {
+        'form': form
+    }
+    return render(request, 'product/edit_product.html', content)
+
+
+def view_all_product(request):
+    """ Show all product's """
+    obj = Product.objects.all()
+    content = {
+        'all': obj
+    }
+    return render(request, 'product/all_product.html', content)
