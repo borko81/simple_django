@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 from pages import views as pages
+from blog import views as blog
 
 from .view import from_num, hello, load_shano_page
 
@@ -17,4 +18,5 @@ urlpatterns = [
     path('about/', pages.about_view, name='about_view'),
 
     path('product/', include('products.urls')),
+    path('blog/', include('blog.urls')),
 ]
