@@ -54,11 +54,11 @@ def product_new(request):
 #     return render(request, 'product/new_product.html', context)
 
 def edit_product(request, product_id):
-    obj = Product.objects.get(id=product_id)
+    obj = get_object_or_404(Product, id=product_id)
     form = ProductForm(request.POST or None, instance=obj)
     if form.is_valid():
         form.save()
-        return redirect(view_all_product)
+        return redirect('product:view_all_product')
     content = {
         'form': form
     }
@@ -72,3 +72,9 @@ def view_all_product(request):
         'all': obj
     }
     return render(request, 'product/all_product.html', content)
+
+
+def delete_product(request, product_id):
+    obj = get_object_or_404(Product, id=product_id)
+    obj.delete()
+    return redirect('product:view_all_product')
