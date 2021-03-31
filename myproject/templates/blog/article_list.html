@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>Article List</h1>
-    {% for instance in object_list %}
+    {% for instance in obj %}
         <p>{{ instance.id }} - <a href="{{ instance.get_absolute_url }}">{{ instance.title }}</a></p>
     {% endfor %}
 </body>
