@@ -1,5 +1,8 @@
+from django.forms import forms
+from .forms import ArticleForm
 from django.db.models import query
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+from django.contrib import messages
 
 
 from django.views.generic import (
@@ -27,6 +30,25 @@ class ArticleListView(View):
         context = {
             'obj': self.get_queryset()
         }
+        return render(request, self.template_name, context)
+
+
+class ArticlePost(View):
+    template_name = 'blog/create_page.html'
+
+    def get(self, request, *args, **kwargs):
+        form = ArticleForm()
+        context = {'form': form}
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        form = ArticleForm(request.POST or None)
+        if form.is_valid():
+            form.save()
+            form = ArticleForm()
+            
+            return redirect('articles:article-create')
+        context = {'form': form}
         return render(request, self.template_name, context)
 
 
