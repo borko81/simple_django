@@ -1,0 +1,12 @@
+{% extends 'portfolio/base.html' %}
+
+{% block body %}
+    {% load static %}
+    <h1 class="h1_center">Първа страница</h1>
+    {% for p in project %}
+        <p>{{ p.title }}</p>
+        <p>{{ p.technology }}</p>
+        <img src="{% static p.image %}">
+        
+    {% endfor %}
+{% endblock body %}
