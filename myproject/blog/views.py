@@ -46,7 +46,7 @@ class ArticlePost(View):
         if form.is_valid():
             form.save()
             form = ArticleForm()
-            
+
             return redirect('articles:article-create')
         context = {'form': form}
         return render(request, self.template_name, context)
