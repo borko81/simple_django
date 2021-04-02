@@ -1,9 +1,13 @@
 from django.contrib import admin
 from django.urls import path, include
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 from pages import views as pages
 from blog import views as blog
 from portfolio import views as portfolio
+
 
 from .view import from_num, hello, load_shano_page
 
@@ -23,3 +27,5 @@ urlpatterns = [
 
     path('port/', include('portfolio.urls')),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

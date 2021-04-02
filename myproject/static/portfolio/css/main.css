@@ -6,3 +6,12 @@ body {
     color: black;
     text-align: center;
 }
+
+.userimage {
+    height: 50px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
