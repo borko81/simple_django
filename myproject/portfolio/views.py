@@ -1,6 +1,3 @@
-from django import forms
-from django.db.models.query import prefetch_related_objects
-from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
 from .models import Project
 from .forms import ProjectForm
@@ -22,6 +19,7 @@ def hello_world(request):
     else:
         context = {
             'project': project,
-            'form': form
+            'form': form,
+            'title': 'Begin',
         }
         return render(request, 'portfolio/index.html', context)
