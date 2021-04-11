@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'pages',
     'blog',
     'portfolio',
+    'bookblog'
 ]
 
 MIDDLEWARE = [
