@@ -25,7 +25,7 @@ urlpatterns = [
 
     path('port/', include('portfolio.urls')),
 
-    path('book/', include('bookblog.urls')),
+    path('book/', include('bookblog.urls', namespace='bookblog')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
