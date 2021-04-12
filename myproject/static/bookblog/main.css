@@ -8,3 +8,8 @@ ul {
     padding: 0;
     margin: 0;
 }
+
+.mytabledetails th{
+    text-align: left;
+    width: 70px;
+}

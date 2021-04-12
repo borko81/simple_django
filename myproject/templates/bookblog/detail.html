@@ -1,14 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h3>Detail</h3>
-    {{ post }}: {{ post.author }}
+{% extends 'bookblog/base.html' %}
+
+{% block content %}
+    <h3>Details: {{ post.title }}</h3>
+    <table class="mytabledetails">
+        <tr>
+            <th>Author</th><td>{{ post.author }}</td>
+        </tr>
+        <tr>
+            <th>Body</th><td>{{ post.body }}</td>
+        </tr>
+        <tr>
+            <th>Updated</th><td>{{ post.updated }}</td>
+        </tr>
+        <tr>
+            <th>Status</th><td>{{ post.status }}</td>
+        </tr>
+    </table>
     <hr>
-</body>
-</html>
+{% endblock content %}
