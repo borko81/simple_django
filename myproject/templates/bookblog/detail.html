@@ -1,20 +1,14 @@
+{# inherit from base.html #}
 {% extends 'bookblog/base.html' %}
 
 {% block content %}
-    <h3>Details: {{ post.title }}</h3>
-    <table class="mytabledetails">
-        <tr>
-            <th>Author</th><td>{{ post.author }}</td>
-        </tr>
-        <tr>
-            <th>Body</th><td>{{ post.body }}</td>
-        </tr>
-        <tr>
-            <th>Updated</th><td>{{ post.updated }}</td>
-        </tr>
-        <tr>
-            <th>Status</th><td>{{ post.status }}</td>
-        </tr>
-    </table>
-    <hr>
+    <h3>Details: <span>{{ post.title|title }}</span></h3>
+    <hr>    
+
+    <div class="mytabledetails">
+        <h3>Author: {{ post.author }}</h3>
+        <p>{{ post.body }}</p>
+        <p><span style="border-bottom: 1px solid black">Created on: </span>{{ post.created }}</p>
+        <p>Status {{ post.status }}</p>
+    </div>  
 {% endblock content %}

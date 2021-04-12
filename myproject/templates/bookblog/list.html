@@ -1,9 +1,18 @@
 {% extends 'bookblog/base.html' %}
 
 {% block content %}
+    {% if 'onlypublished' in  request.path %}
+        <a href="{% url 'bookblog:post_list' %}">View all posts</a>
+    {% else %}
+        <a href="{% url 'bookblog:published_list' %}">View only published posts</a>
+    {% endif %}
+    
     <ul>
         {% for post in posts %}
-            <li><a href="{{ post.get_absolute_url }}">{{ post.title|upper }}</a>: {{ post.author }} - Date Created: {{ post.created }}</li>
+            <li><a href="{{ post.get_absolute_url }}">{{ post.title|upper }}</a>: 
+            <p>Author: {{ post.author }}</p>
+            {{ post.body|truncatewords:10|linebreaks }}</li>
+            <hr>
         {% endfor %}
     </ul>
 {% endblock content %}
