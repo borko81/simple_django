@@ -1,0 +1,10 @@
+{% extends 'bookblog/base.html' %}
+
+{% block content %}
+    <h4>Email form for post: {{ post.title }}</h4>
+    <form action="" method="POST">
+    {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Send">
+    </form>
+{% endblock content %}
