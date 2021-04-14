@@ -20,3 +20,11 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = 'name email body'.split()
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for f in self.fields:
+            self.fields[f].widget.attrs.update({'class': 'form-control'})
+        
+
+        

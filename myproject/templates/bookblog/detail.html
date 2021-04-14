@@ -3,30 +3,26 @@
 
 {% block content %}
 <h3>Details: <span>{{ post.title|title }}</span></h3>
+<a href="{% url 'bookblog:share' post.id %}">Send email with details</a>
 <hr>
 
 <div class="mytabledetails">
     <h3>Author: {{ post.author }}</h3>
     <p>{{ post.body }}</p>
-    <p><span style="border-bottom: 1px solid black">Created on: </span>{{ post.created }}</p>
-    <p>Status {{ post.status }}</p>
-    <a href="{% url 'bookblog:share' post.id %}">Send email with details</a>
+    <p><span style="border-bottom: 1px solid black">Created on: </span>{{ post.created }} - <span style="border-bottom: 1px solid black">Status {{ post.status }}</span></p>
 </div>
-
+<hr>
 <h2>Total comments</h2>
 {% with comments.count as total_comments %}
 {{ total_comments }} comment {{ total_comments|pluralize }}
 {% endwith %}
-
 {% for comment in comments %}
 <p class="lead">Comment {{ comment.name }}</p>
 <p>{{ comment.body|linebreaks }}</p>
-<hr>
 {% empty %}
 <p>There are no comment yet.</p>
 {% endfor %}
-
-<h2>New comment</h2>
+<hr>
 {% if new_comment %}
 <h2>New comment added successfully</h2>
 {% else %}
@@ -34,7 +30,7 @@
 <form action="" method='POST'>
     {% csrf_token %}
     {{ comment_form.as_p }}
-    <p><input type="submit" value='Add comment'></p>
+    <p><input type="submit" value='Add comment' class='form-control btn btn-success'></p>
 </form>
 {% endif %}
 
