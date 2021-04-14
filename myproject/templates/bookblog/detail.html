@@ -10,5 +10,6 @@
         <p>{{ post.body }}</p>
         <p><span style="border-bottom: 1px solid black">Created on: </span>{{ post.created }}</p>
         <p>Status {{ post.status }}</p>
+        <a href="{% url 'bookblog:share' post.id %}">Send email with details</a>
     </div>  
 {% endblock content %}

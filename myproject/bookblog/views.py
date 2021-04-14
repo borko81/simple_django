@@ -54,10 +54,10 @@ def post_share(request, post_id):
                 post.get_absolute_url()
             )
             subject = f"{cd['name']} recomend to read {post.title}"
-            message = f"Read: {post.title}"
+            message = f"Read: {post.title} at {post_url}"
             send_mail(subject, message, 'korea60@abv.bg', [cd['to']])
             send = True
-            return HttpResponse("Email send successfull")
+            # return HttpResponse("Email send successfull")
     else:
         form = EmailForm()
-    return render(request, 'bookblog/share.html', {'post': post, 'form': form   })
+    return render(request, 'bookblog/share.html', {'post': post, 'form': form, 'send': send})
