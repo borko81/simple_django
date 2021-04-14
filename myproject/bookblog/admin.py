@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post
+from .models import Post, Comment
 
 
 @admin.register(Post)
@@ -11,3 +11,9 @@ class PostAdmin(admin.ModelAdmin):
     # Id for user is number not name
     raw_id_fields = ('author',)
     date_hierarchy = 'publish'
+
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = 'post name email created'.split()
+    search_fields = 'post name'.split()

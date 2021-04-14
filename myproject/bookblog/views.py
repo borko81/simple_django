@@ -1,9 +1,10 @@
-from django.http.response import HttpResponse
+from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
+from django.urls.base import reverse
 from django.views.generic import ListView
 from django.core.mail import send_mail
-from . models import Post
-from . form import EmailForm
+from . models import Post, Comment
+from . form import EmailForm, CommentForm
 
 
 def post_list(request):
@@ -33,12 +34,28 @@ class ListViewPublish(ListView):
 def post_detail(request, year, month, day, post):
     post = get_object_or_404(Post, slug=post,
                              publish__year=year, publish__month=month, publish__day=day)
+
+    comments = post.comments.filter(active=True)
+    new_comment = None
+    if request.method == 'POST':
+        comment_form = CommentForm(data=request.POST)
+        if comment_form.is_valid():
+            new_comment = comment_form.save(commit=False)
+            new_comment.post = post
+            new_comment.save()
+            return HttpResponseRedirect(reverse('bookblog:post_detail', args=[year, month, day, post.slug]))
+    else:
+        comment_form = CommentForm()
+
     return render(
         request,
         'bookblog/detail.html',
         {
             'post': post,
             'title': 'detail posts',
+            'comments': comments,
+            'new_comment': new_comment,
+            'comment_form': comment_form,
         }
     )
 
