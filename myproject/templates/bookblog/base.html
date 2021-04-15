@@ -1,3 +1,4 @@
+{% load blog_tags %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -16,7 +17,11 @@
         {% block content %}
         Replace this text!
         {% endblock content %}
+        <div class="navbar fixed-bottom">
+            Total posts: {% total_posts %}
+        </div>
     </div>
+    
 </body>
 
 </html>
