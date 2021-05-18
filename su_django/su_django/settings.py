@@ -29,6 +29,8 @@ INSTALLED_APPS = [
     'su_django',
     'app01',
     'cityes',
+    'secondary_app',
+    'main_app',
 ]
 
 MIDDLEWARE = [

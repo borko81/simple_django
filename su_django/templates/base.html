@@ -10,9 +10,7 @@
 </head>
 <body>
     <div class="container">
-        {% for data in data %}
-            {{ data.name }}<br>{{ data.town }}<br>{{ data.age }}
-        {% endfor %}
+        {% block body %}Enter something{% endblock body %}
     </div>
 </body>
 </html>
