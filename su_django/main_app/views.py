@@ -1,4 +1,7 @@
 from django.shortcuts import render
 
 def index(request):
-    return render(request, 'main_app/index.html')
+    data = {
+        'mdata': ["Downtown","Uptown","Midtown"],
+    }
+    return render(request, 'main_app/index.html', data)
