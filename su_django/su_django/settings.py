@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'cityes',
     'secondary_app',
     'main_app',
+    'boards',
 ]
 
 MIDDLEWARE = [
