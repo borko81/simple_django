@@ -1,12 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h1>Boards</h1>
-<table border="1">
+{% extends 'base.html' %}
+{% block body %}
+{% load custom_extras %}
+{% if request.path|endswith:'/boards/' %}
+    <h1>This is the board</h1>
+{% else %}
+    <p>Not found this url</p>
+{% endif %}
+
+<table border="1" class="table">
     {% for b in boards %}
         <tr>
             <td>
@@ -19,5 +20,4 @@
         </tr>
     {% endfor %}
 </table>
-</body>
-</html>
+{% endblock body %}
