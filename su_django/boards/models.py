@@ -24,3 +24,11 @@ class Post(models.Model):
     update_ar = models.DateTimeField(null=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
     updated_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+', null=True)
+
+class Book(models.Model):
+    name = models.CharField(max_length=25, unique=True)
+    picture = models.ImageField()
+    author = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.name

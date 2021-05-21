@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1>All Book</h1>
+{% for book in shelf %}
+    <h3>{{ book.name }}</h3><br>
+    <small>{{ bool.author }}</small>
+    <img src="{{ book.picture.url }}" alt="{{ book.name }}">
+{% endfor %}
+{% endblock body %}
