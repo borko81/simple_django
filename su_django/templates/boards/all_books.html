@@ -1,10 +1,15 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<h1>All Book</h1>
-{% for book in shelf %}
-    <h3>{{ book.name }}</h3><br>
-    <small>{{ bool.author }}</small>
-    <img src="{{ book.picture.url }}" alt="{{ book.name }}">
-{% endfor %}
+    <h1>All Book</h1>
+    <hr>
+    {% for book in shelf %}
+        <div class="d-flex">
+            <h3>{{ book.name }}</h3>
+            <small>{{ book.author }}</small>
+            <img src="{{ book.picture.url }}" alt="{{ book.name }}" width="150" height="150">
+            <a href="{% url 'edit_book' book.id %}">Edit</a>&nbsp;|&nbsp;<a href="{% url 'delete_book' book.id %}">Delete</a>
+        </div>
+        <br>
+    {% endfor %}
 {% endblock body %}
