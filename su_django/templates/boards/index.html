@@ -1,23 +1,47 @@
 {% extends 'base.html' %}
-{% block body %}
-{% load custom_extras %}
-{% if request.path|endswith:'/boards/' %}
-    <h1>This is the board</h1>
-{% else %}
-    <p>Not found this url</p>
-{% endif %}
 
-<table border="1" class="table">
-    {% for b in boards %}
-        <tr>
-            <td>
-                {{ b.name }}<br>
-                <small>{{ b.description }}</small>
-            </td>
-            <td>
-                0
-            </td>
-        </tr>
-    {% endfor %}
-</table>
+{% block css %}
+    <style>
+
+    </style>
+{% endblock css %}
+
+{% block body %}
+    {% load custom_extras %}
+    {% if request.path|endswith:'/boards/' %}
+        <h1>This is the board</h1>
+    {% else %}
+        <p>Not found this url</p>
+    {% endif %}
+
+    {% if messages %}
+
+        {% for m in messages %}
+            <div class="alert alert-success">
+                {{ m }}
+            </div>
+        {% endfor %}
+
+    {% endif %}
+
+
+    <table border="1" class="table">
+        {% for b in boards %}
+            <tr>
+                <td>
+                    {{ b.name }}<br>
+                    <small>{{ b.description }}</small>
+                </td>
+                <td>
+                    0
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    {% block js %}
+        <script>
+            $('.alert-success').fadeOut(3000);
+        </script>
+    {% endblock js %}
 {% endblock body %}

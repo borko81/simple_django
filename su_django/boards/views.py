@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.contrib import messages
 
 from .forms import BookCreate
 from .models import Board, Book
@@ -7,6 +8,8 @@ from .models import Board, Book
 
 def home(request):
     boards = Board.objects.all()
+    print("-"*20, '\n', request)
+    messages.success(request, 'Success messages')
     return render(request, 'boards/index.html', {'boards': boards})
 
 
@@ -24,6 +27,7 @@ def upload_book(request):
         forms = BookCreate(request.POST, request.FILES)
         if forms.is_valid():
             forms.save()
+            messages.success(request, 'New book added successfully')
             return redirect('all_book')
         else:
             return HttpResponse('Not valid form reload in <a href={{ url: "index" }}>reload</a>')
@@ -50,5 +54,6 @@ def delete_book(request, book_id):
     except Book.DoesNotExist:
         return redirect('all_book')
     book_sel.delete()
+    messages.success(request, f'Book with id {book_id} delete successfully')
     return redirect('all_book')
 

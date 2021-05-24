@@ -3,6 +3,13 @@
 {% block body %}
     <h1>All Book</h1>
     <hr>
+    {% if messages %}
+        {% for m in messages %}
+            <div class="alert alert-success">
+                {{ m }}
+            </div>
+        {% endfor %}
+    {% endif %}
     {% for book in shelf %}
         <div class="d-flex">
             <h3>{{ book.name }}</h3>
@@ -12,4 +19,9 @@
         </div>
         <br>
     {% endfor %}
+    {% block script %}
+        <script>
+            $('.alert-success').fadeOut(3500);
+        </script>
+    {% endblock script %}
 {% endblock body %}
