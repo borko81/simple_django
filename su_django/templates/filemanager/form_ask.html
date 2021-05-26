@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ask Page</title>
+</head>
+<body>
+
+<form action="{% url 'show_all' %}" method="POST">
+    {% csrf_token %}
+    {{ forms }}
+    <input type="submit" value="Load">
+</form>
+
+</body>
+</html>

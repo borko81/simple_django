@@ -19,7 +19,7 @@
         <tr>
             <td>{{ name }}</td>
             <td>
-                <a href="../{{ path }}">{{ path }}</a>
+                <a href="{% url 'open_path' path %}">{{ path }}</a>
             </td>
         </tr>
     {% endfor %}

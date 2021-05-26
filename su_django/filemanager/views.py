@@ -1,6 +1,10 @@
 import os
+from os import startfile
 
+from django.http import HttpResponse
 from django.shortcuts import render
+
+from .forms import AskForm
 
 
 def return_only_name_of_file(filename):
@@ -22,8 +26,23 @@ class Directory:
 
 
 def show_files(requests):
+    ask = requests.POST.get('name')
+    ask = '.' + ask
     files = Directory(r'D:\movies')
     content = {
-        'files': files.search_it(('.avi', '.mkv'))
+        'files': files.search_it(ask)
     }
     return render(requests, 'filemanager/index.html', content)
+
+
+def open_path(request, path):
+    startfile(path)
+    return HttpResponse('Now playing {}'.format(path))
+
+
+def ask_and_return_from_form(request):
+    forms = AskForm()
+    content = {
+        'forms': forms
+    }
+    return render(request, 'filemanager/form_ask.html', content)
