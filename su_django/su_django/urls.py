@@ -9,4 +9,6 @@ urlpatterns = [
     path('main/', include('main_app.urls')),
     path('secondary/', include('secondary_app.urls')),
     path('boards/', include('boards.urls')),
+
+    path('files/', include('filemanager.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

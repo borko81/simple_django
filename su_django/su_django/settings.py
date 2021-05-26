@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'secondary_app',
     'main_app',
     'boards',
+    'filemanager',
 ]
 
 MIDDLEWARE = [
