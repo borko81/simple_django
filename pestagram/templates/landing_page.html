@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Landing Page{% endblock title %}
+{% load static %}
+{% block body %}
+
+    <div class="container">
+        <div class="jumbotron parent">
+            <img style="width: 100%"
+                 src="{% static 'images/Active-pets-dogs-and-cats.png' %}" alt="picture">
+            <div class="absolute">
+                <h1 class="display-4">Добре дошли Petstagram</h1>
+                <p class="lead">Споделете вашите снимки.</p>
+                <hr class="my-4">
+                <div class="inner cover">
+                    <h1 class="cover-heading"></h1>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <p class="lead">Вече имате акаунт? <br><a href="#" class="btn btn-lg btn-secondary">sign
+                                in</a></p>
+                        </div>
+                        <div class="col-lg-6">
+                            <p class="lead"> Имате ли регистрация? <br>
+                                <a href="#" class="btn btn-lg btn-secondary">sign up</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock body %}
