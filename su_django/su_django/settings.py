@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'main_app',
     'boards',
     'filemanager',
+    'posts',
 ]
 
 MIDDLEWARE = [
