@@ -2,6 +2,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.js"
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+            crossorigin="anonymous"></script>
     <title>Todo App</title>
 </head>
 <style>
@@ -16,12 +22,12 @@
         text-decoration: underline;
     }
 
-    div.done {
+    .done {
         color: green;
         font-weight: bold;
     }
 
-    div.open {
+    .open {
         color: red;
         font-weight: bold;
     }
@@ -52,27 +58,74 @@
         margin: 0 auto;
         padding: 10px;
     }
+
 </style>
 <body>
 <h1>My Todo List</h1>
 
-{% if todos %}
-    <div class="container">
+<div class="container">
+
+    <form method="POST" id="post-form">
+        {% csrf_token %}
+        <label for="">Title
+            <input type="text" name="title" id="title" class="form-control">
+        </label>
+        <label for="">Description
+            <input type="text" name="description" id="description" class="form-control">
+        </label>
+        <button id="new_save" class="btn btn-primary" type="submit">Save</button>
+    </form>
+
+    {% if todos %}
+
         {% for todo in todos %}
             <div class="todo">
                 <p>{{ todo.title }}</p>
                 <div class="description">{{ todo.description }}</div>
                 {% if todo.is_done %}
-                    <div class="done">Done</div>
+                    <a href="" class="mychange done" data-catid="{{ todo.id }}">Done</a>
                 {% else %}
-                    <div class="open">Not Done</div>
+                    <a href="" class="mychange open" data-catid="{{ todo.id }}">UnDone</a>
                 {% endif %}
             </div>
         {% endfor %}
-    </div>
-{% else %}
-    <p>Not Todo</p>
-{% endif %}
 
+    {% else %}
+        <p>Not Todo</p>
+    {% endif %}
+</div>
+<script>
+    $(document).on('submit', '#post-form', function (e) {
+        $.ajax({
+            type: 'POST',
+            url: '{% url "create_new" %}',
+            data: {
+                title: $('#title').val(),
+                description: $('#description').val(),
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                action: 'post'
+            },
+            success: function (json) {
+                document.getElementById("post-form").reset();
+            },
+            error: function (xhr, errmsg, err) {
+                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            }
+        });
+    });
+
+    $('.mychange').click(function () {
+        let id = $(this).attr('data-catid');
+        $.ajax({
+            type: 'GET',
+            url: '{% url "change_done" %}',
+            data: {'id': id},
+            success: function (data) {
+                console.log(data);
+            }
+        });
+    });
+
+</script>
 </body>
 </html>
