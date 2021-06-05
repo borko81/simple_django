@@ -67,26 +67,45 @@
 
     <form method="POST" id="post-form">
         {% csrf_token %}
+
         <label for="">Title
-            <input type="text" name="title" id="title" class="form-control">
+
+            {% if title %}
+                <input type="text" name="title" id="title" class="form-control" value="{{ title }}">
+            {% else %}
+                <input type="text" name="title" id="title" class="form-control">
+            {% endif %}
         </label>
+
         <label for="">Description
-            <input type="text" name="description" id="description" class="form-control">
+            {% if description %}
+                <input type="text" name="description" id="description" class="form-control" value="{{ description }}">
+                <input type="hidden" name="id" value="{{ id }}">
+            {% else %}
+                <input type="text" name="description" id="description" class="form-control">
+            {% endif %}
         </label>
         <button id="new_save" class="btn btn-primary" type="submit">Save</button>
     </form>
+
+
+
 
     {% if todos %}
 
         {% for todo in todos %}
             <div class="todo">
                 <p>{{ todo.title }}</p>
+
                 <div class="description">{{ todo.description }}</div>
                 {% if todo.is_done %}
                     <a href="" class="mychange done" data-catid="{{ todo.id }}">Done</a>
                 {% else %}
                     <a href="" class="mychange open" data-catid="{{ todo.id }}">UnDone</a>
                 {% endif %}
+                <br>
+                <a href="" class="delete_todo" data-delid="{{ todo.id }}"><small>delete</small></a>&nbsp;
+                <a href="{% url 'edit_todo' todo.id %}" data-delid="{{ todo.id }}"><small>edit</small></a>
             </div>
         {% endfor %}
 
@@ -109,7 +128,7 @@
                 document.getElementById("post-form").reset();
             },
             error: function (xhr, errmsg, err) {
-                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                console.log(xhr.status + ": " + xhr.responseText);
             }
         });
     });
@@ -122,6 +141,22 @@
             data: {'id': id},
             success: function (data) {
                 console.log(data);
+            }
+        });
+    });
+
+    $('.delete_todo').click(function () {
+        let id = $(this).attr('data-delid');
+        $.ajax({
+            type: 'GET',
+            url: '{% url "delete_todo" %}',
+            data: {'id': id},
+            success: function (data) {
+                alert(data)
+                window.location.href = "{% url 'index' %}"
+            },
+            error: function (xhr, errmsg, err) {
+                alert(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
             }
         });
     });
