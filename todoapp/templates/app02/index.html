@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.js"
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+            crossorigin="anonymous"></script>
+
+</head>
+<body>
+<div class="container">
+
+
+    <form action="" method="POST" id="post-form">
+        <div class="form-group">
+            <input type="text" class="form-control" id="title" placeholder="title">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" id="description" placeholder="description">
+        </div>
+        <div class="form-group">
+            <select name="" id="user" class="form-control">
+                {% for u in user %}
+                    <option value="{{ u.id }}" class="form-control">{{ u.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <br>
+    <hr>
+
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th>User</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        {% for post in posts %}
+            <tr>
+                <td>{{ post.name }}</td>
+                <td>{{ post.title }}</td>
+                <td>{{ post.description }}</td>
+                <td>Edit</td>
+                <td>Delete</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+<script>
+    $(document).on('submit', '#post-form', function (e) {
+        $.ajax({
+            type: 'POST',
+            url: '{% url "home" %}',
+            data: {
+                title: $('#title').val(),
+                description: $('#description').val(),
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                name: $('#user').val(),
+                action: 'post'
+            },
+            success: function (json) {
+                document.getElementById("post-form").reset();
+            },
+            error: function (xhr, errmsg, err) {
+                alert(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            }
+        });
+    });
+</script>
+</body>
+</html>
