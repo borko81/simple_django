@@ -9,7 +9,35 @@
             src="https://code.jquery.com/jquery-3.6.0.js"
             integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
             crossorigin="anonymous"></script>
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0); /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+        }
 
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid black;
+            width: 80%;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
@@ -51,12 +79,45 @@
                 <td>{{ post.name }}</td>
                 <td>{{ post.title }}</td>
                 <td>{{ post.description }}</td>
-                <td><a href="#" class="btn btn-success">Edit</a></td>
-                <td><button class="btn btn-success deletebutton" data-deleteid="{{ post.id }}">Delete</button></td>
+                <td>
+                    <button class="btn btn-warning editbtn" data-btn="{{ post.id }}">Edit</button>
+                </td>
+                <td>
+                    <button class="btn btn-success deletebutton" data-deleteid="{{ post.id }}">Delete</button>
+                </td>
             </tr>
         {% endfor %}
     </table>
 </div>
+
+<div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+
+        <form action="" method="POST" id="edit-form">
+            <div class="form-group">
+                <input type="text" class="form-control" id="edit_title">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="edit_description">
+            </div>
+            <div class="form-group">
+                <select name="" id="edit_user" class="form-control">
+                    {% for u in user %}
+                        <option value="{{ u.id }}" class="form-control">{{ u.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <input type="hidden" class="form-control" id="edit_id">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+</div>
+
 <script>
     $(document).on('submit', '#post-form', function (e) {
         $.ajax({
@@ -78,18 +139,69 @@
         });
     });
 
-    $('.deletebutton').on('click', function() {
-       let confirm_me = confirm('Are you sure want to remove item?');
-       if(confirm_me) {
-           let object_id = $(this).attr('data-deleteid');
-           $.ajax({
-              url: `delid/${object_id}/`,
-               success: function(data) {
-                  alert(data)
-                   window.location.href = "{% url 'home' %}"
-               }
-           });
-       }
+    $(document).on('submit', '#edit-form', function (e) {
+        let id = $('#edit_id').val();
+        $.ajax({
+            type: 'POST',
+            url: `edit/${id}/`,
+            data: {
+                title: $('#edit_title').val(),
+                description: $('#edit_description').val(),
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                name: $('#edit_user').val(),
+                action: 'post'
+            },
+            success: function (json) {
+                document.getElementById("edit-form").reset();
+            },
+            error: function (xhr, errmsg, err) {
+                alert(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            }
+        });
+    });
+
+    $('.deletebutton').on('click', function () {
+        let confirm_me = confirm('Are you sure want to remove item?');
+        if (confirm_me) {
+            let object_id = $(this).attr('data-deleteid');
+            $.ajax({
+                url: `delid/${object_id}/`,
+                success: function (data) {
+                    alert(data)
+                    window.location.href = "{% url 'home' %}"
+                }
+            });
+        } else {
+            alert('Delete was canceled by user')
+        }
+    });
+
+    $('.editbtn').on('click', function () {
+        let object_od = $(this).attr("data-btn");
+        let edit_title = document.getElementById('edit_title');
+        let edit_description = document.getElementById('edit_description');
+        let edit_user = document.getElementById('edit_user');
+        let edit_id = document.getElementById('edit_id');
+
+        $.ajax({
+            url: `edit/${object_od}/`,
+            success: function (data) {
+                edit_title.setAttribute('value', data.title);
+                edit_description.setAttribute('value', data.description);
+                edit_user.setAttribute('value', data.name);
+                edit_id.setAttribute('value', data.id);
+            }
+        });
+
+        let modal = document.getElementById('myModal');
+
+        var span = document.getElementsByClassName("close")[0];
+
+        modal.style.display = "block";
+
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
     });
 </script>
 </body>

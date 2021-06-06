@@ -1,5 +1,6 @@
 from django.http import JsonResponse, HttpResponse
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404
+from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
 
 from app02.models import Post, User
@@ -22,7 +23,6 @@ def index(request):
         response_me['description'] = description
         user = name
         response_me['user'] = User.objects.get(id=user)
-        print(response_me)
         Post.objects.create(
             title=response_me['title'],
             description=response_me['description'],
@@ -44,3 +44,20 @@ def delid(request, id):
     return HttpResponse(f"Successfully delete item with id {id}")
 
 
+def edit(request, id):
+    if request.method == 'GET':
+        item_data = {}
+        item = get_object_or_404(Post, id=id)
+        item_data['title'] = item.title
+        item_data['description'] = item.description
+        item_data['id'] = item.id
+        item_data['name'] = item.name.id
+        return JsonResponse(item_data)
+    else:
+        item = get_object_or_404(Post, id=id)
+        item.title = request.POST.get('title')
+        item.description = request.POST.get('description')
+        user_request = request.POST.get('name')
+        item.name = User.objects.get(id=user_request)
+        item.save()
+        return HttpResponse('Success')
