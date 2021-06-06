@@ -51,8 +51,8 @@
                 <td>{{ post.name }}</td>
                 <td>{{ post.title }}</td>
                 <td>{{ post.description }}</td>
-                <td>Edit</td>
-                <td>Delete</td>
+                <td><a href="#" class="btn btn-success">Edit</a></td>
+                <td><button class="btn btn-success deletebutton" data-deleteid="{{ post.id }}">Delete</button></td>
             </tr>
         {% endfor %}
     </table>
@@ -76,6 +76,20 @@
                 alert(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
             }
         });
+    });
+
+    $('.deletebutton').on('click', function() {
+       let confirm_me = confirm('Are you sure want to remove item?');
+       if(confirm_me) {
+           let object_id = $(this).attr('data-deleteid');
+           $.ajax({
+              url: `delid/${object_id}/`,
+               success: function(data) {
+                  alert(data)
+                   window.location.href = "{% url 'home' %}"
+               }
+           });
+       }
     });
 </script>
 </body>

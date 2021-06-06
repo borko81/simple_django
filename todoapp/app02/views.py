@@ -1,5 +1,6 @@
-from django.http import JsonResponse
-from django.shortcuts import render
+from django.http import JsonResponse, HttpResponse
+from django.shortcuts import render, get_object_or_404, redirect
+from django.views.decorators.csrf import csrf_exempt
 
 from app02.models import Post, User
 
@@ -28,4 +29,18 @@ def index(request):
             name=response_me['user']
         )
         return JsonResponse(response_me)
+
+    if request.POST.get('action') == 'delete':
+        id = request.GET.get('id')
+        item = get_object_or_404(Post, id=id)
+        item.delete()
+        return JsonResponse(f'Successfully delete item with id {id}')
     return render(request, 'app02/index.html', {'posts': posts, 'user': show_user()})
+
+
+def delid(request, id):
+    item = get_object_or_404(Post, id=id)
+    item.delete()
+    return HttpResponse(f"Successfully delete item with id {id}")
+
+
