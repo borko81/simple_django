@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+    <div class="d-flex">
+        <div class="d-inline p-2 w-50">
+            <img src="{{ detail.image_url }}" class="w-50 rounded mx-auto d-block">
+        </div>
+        <div class="d-inline p-2 w-50">
+            <div class="d-flex justify-content-between">
+                <h5><u>Type:</u> {{ detail.type }}</h5>
+                <h5><u>Name:</u> {{ detail.name }}</h5>
+                <h5><u>Age:</u> {{ detail.age }}</h5>
+            </div>
+            <p class="mt-2">Description: {{ detail.description }}</p>
+            <a href="{% url 'common:pet_like' detail.id %}"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+            <p class="mt-2">Likes: {{ likes }}</p>
+        </div>
+    </div>
+
+{% endblock body %}
+

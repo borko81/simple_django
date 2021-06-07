@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+    <h1 class='text-center'>All pet photos</h1>
+
+    <div class="row">
+        {% for pet in pets %}
+            <div class="col-lg-4">
+                <div class="card" style="width: 18rem;">
+                    <img src="{{ pet.image_url }}" class="card-img-top" alt="..." width="250" height="200">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ pet.type }} {{ pet.name }}, Age: {{ pet.age }}</h5>
+                        <p class="card-text">{{ pet.description }}</p>
+                        <a href="{% url 'common:pet_detail' pet.id %}" class="btn btn-primary">See details</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock body %}

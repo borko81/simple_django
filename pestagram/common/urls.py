@@ -1,7 +1,10 @@
 from django.urls import path
-from .views import index
+from .views import index, pet_all, pet_detail, pet_like
 
 app_name = 'common'
 urlpatterns = [
     path('', index, name='index'),
+    path('pets/', pet_all, name='pet_all'),
+    path('pets/details/<int:pk>/', pet_detail, name='pet_detail'),
+    path('pets/like/<int:pk>/', pet_like, name='pet_like'),
 ]
