@@ -1,10 +1,11 @@
-from django.shortcuts import render
+from django.core.serializers import serialize
+from django.http import JsonResponse
 
 from .models import Person
 
 
 def index(request):
-    content = {
-        'data': Person.objects.all()
-    }
-    return render(request, 'base.html', content)
+    result = {}
+    data = Person.objects.all()
+    result = serialize('json', data)
+    return JsonResponse(result, safe=False)
