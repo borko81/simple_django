@@ -1,10 +1,24 @@
 <!DOCTYPE html>
+{% load person_tags %}
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-Future of cityes
+Total posts: {% total_posts %}
+<br>
+Below 40: {% below_forty %}
+<br>
+Under 40: {% under_forty %}
+<br>
+{% all_person 2 as persons %}
+
+<ul>
+{% for p in persons %}
+    <li>{{ p.name }} - {{ p.age }}</li>
+{% endfor %}
+</ul>
 </body>
 </html>
