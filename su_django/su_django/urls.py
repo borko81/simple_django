@@ -13,4 +13,5 @@ urlpatterns = [
     path('posts/', include('posts.urls')),
 
     path('files/', include('filemanager.urls')),
+    path('forms/', include('forms_lab.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

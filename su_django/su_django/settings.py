@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'boards',
     'filemanager',
     'posts',
+    'forms_lab',
 ]
 
 MIDDLEWARE = [
