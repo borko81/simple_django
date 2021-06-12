@@ -4,11 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Todo App</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css">
+    <style>
+        .mybut {
+            height: 35px;
+            width: 85%;
+            margin: 0;
+        }
+    </style>
 </head>
 <body>
-<h1>My Todo List</h1>
+
 {% if todos %}
     <div class="container">
+        <div class="d-flex flex-row">
+            <h3 class="p-2">Todo List</h3> <a class="btn btn-primary form-control mybut" href="{% url 'create_todo' %}">Create</a>
+        </div>
         {% for todo in todos %}
             <div class="todo">
                 <p>{{ todo.name }}</p>
@@ -16,8 +27,8 @@
                 <a class="btn btn-primary" href='update/{{ todo.id }}'>Update</a>
                 <a class="btn btn-primary" href='delete/{{ todo.id }}'>Delete</a>
             </div>
+            <hr>
         {% endfor %}
-        <a class="btn btn-primary" href="{% url 'create_todo' %}">Create</a>
     </div>
 {% else %}
     <h2>No TODOs</h2>
