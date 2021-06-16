@@ -1,0 +1,45 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script
+  src="https://code.jquery.com/jquery-3.6.0.js"
+  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+  crossorigin="anonymous"></script>
+    <title>Model Forms Demo</title>
+    <style>
+
+    </style>
+</head>
+<body>
+
+    {% if messages %}
+        <ul id="messages">
+            {% for m in messages %}
+                <p class="messages">{{ m }}</p>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <a class="text-light btn btn-success mt-2 ml-2" href="{% url 'books:create' %}">Create new Book</a>
+    <p class="display-4 mt-2 ml-2">All books</p>
+    <div class="d-flex justify-content-start">
+        {% for book in books %}
+        <div class="card m-2" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">{{ book.title }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ book.author }}</h6>
+                <p class="card-text">{{ book.description }}</p>
+                <h6 class="card-subtitle mb-2 text-muted">{{ book.pages }} pages</h6>
+                <a class="text-light btn btn-primary" href="{% url 'books:edit' book.pk %}">Edit</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        $('#messages').css('background-color', 'pink').fadeOut(3000);
+    </script>
+</body>
+</html>
