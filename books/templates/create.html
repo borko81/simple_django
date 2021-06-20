@@ -3,29 +3,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.js"
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+            crossorigin="anonymous"></script>
     <title>Model Forms Demo</title>
 </head>
 <body>
-    <h1 class="display-4 text-center">Please fill out the form!</h1>
-    <form method="post" class="m-auto w-25">
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="id_title">Title</label>
-            {{ form.title }}
-        </div>
-        <div class="form-group">
-            <label for="id_description">Description</label>
-            {{ form.description }}
-        </div>
-        <div class="form-group">
-            <label for="id_pages">Pages</label>
-            {{ form.pages }}
-        </div>
-        <div class="form-group">
-            <label for="id_author">Author</label>
-            {{ form.author }}
-        </div>
-        <button type="submit" class="btn btn-primary mx-auto">Submit</button>
-    </form>
+<h1 class="display-4 text-center">Please fill out the form!</h1>
+
+<form method="post" class="m-auto w-25">
+    {{ form.errors }}
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="id_title">Title</label>
+        {{ form.title }}
+    </div>
+    <div class="form-group">
+        <label for="id_description">Description</label>
+        {{ form.description }}
+    </div>
+    <div class="form-group">
+        <label for="id_pages">Pages</label>
+        {{ form.pages }}
+    </div>
+    <div class="form-group">
+        <label for="id_author">Author</label>
+        {{ form.author }}
+    </div>
+    <button type="submit" class="btn btn-primary mx-auto">Submit</button>
+</form>
+<script>
+    $('.errorlist').css('color', 'red');
+
+</script>
 </body>
 </html>
