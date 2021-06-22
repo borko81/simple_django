@@ -7,6 +7,7 @@
         <ul class="navbar-nav">
             <a class="nav-link" href="{% url 'common:index' %}">Home</a>
             <a class="nav-link" href="{% url 'common:pet_all' %}">All Pets</a>
+            <a class="nav-link" href="{% url 'common:pets_create' %}">Pets Create</a>
             <li class="nav-item">
                 <a class="nav-link" href="#">Login</a>
             </li>
@@ -14,5 +15,8 @@
                 <a class="nav-link" href="#">Sign Up</a>
             </li>
         </ul>
+        <div class="text-right">
+            {{ animals.count }}
+        </div>
     </div>
 </nav>
