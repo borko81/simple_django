@@ -41,6 +41,3 @@ class CommentForm(forms.Form):
         'class': 'form-control rounded-2'
     }))
 
-    class Meta:
-        model = Comment
-        fields = ('comment', )

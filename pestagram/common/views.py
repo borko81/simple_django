@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 
 from common.forms import CreatePetForm, CommentForm
-from common.models import Pet, Like
+from common.models import Pet, Like, Comment
 
 
 def animals_count():
@@ -20,11 +20,16 @@ def pet_all(request):
 
 
 def pet_detail(request, pk):
-    pet_details = get_object_or_404(Pet, id=pk)
+    pet_details = Pet.objects.get(pk=pk)
     likes = Like.objects.filter(pet=pet_details).count()
+    comments = Comment.objects.all()
 
-    my_form = CommentForm(request.POST or None)
-    return render(request, 'pet_detail.html', {'detail': pet_details, 'likes': likes, 'my_form': my_form})
+    if request.method == 'POST':
+        comment = request.POST['comment']
+        Comment.objects.create(comment=comment, pet=pet_details)
+        return redirect('common:pet_detail', pk)
+    form = CommentForm()
+    return render(request, 'pet_detail.html', {'detail': pet_details, 'likes': likes, 'form': form, 'comment': comments})
 
 
 def pet_like(request, pk):
@@ -57,15 +62,3 @@ def pets_delete(request, pk):
     obj = get_object_or_404(Pet, pk=pk)
     obj.delete()
     return redirect('common:pet_all')
-
-
-def pets_detail(request, pk):
-    pet_details = get_object_or_404(Pet, id=pk)
-    likes = Like.objects.filter(pet=pet_details).count()
-
-    my_form = CommentForm(request.POST or None)
-    if my_form.is_valid():
-        my_form.save()
-        return redirect('pet_detail', pk)
-    return render(request, 'pet_detail.html', {'detail': pet_details, 'likes': likes, 'my_form': my_form})
-
