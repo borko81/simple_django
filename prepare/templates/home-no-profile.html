@@ -1,4 +1,5 @@
-<html lang="en"><head>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="./static/css/style.css">
@@ -6,38 +7,31 @@
 </head>
 
 <body>
-    
+
 <nav>
     <ul>
         <li class="img"><img src="./static/images/dollar.png"></li>
         <li><a href="/">Expenses Tracker</a></li>
-        
+
     </ul>
 </nav>
-    <div class="body">
+<div class="body">
 
 
-<h1>Enter your data</h1>
-<div class="form">
-    <form method="POST" action="{% url 'home_page' %}">
-        {% csrf_token %}
-        <label for="budget">Budget</label>
-        <input type="number" name="budget" required="" id="id_budget">
-
-        <label for="firstName">First Name</label>
-        <input type="text" name="first_name" maxlength="15" required="" id="id_first_name">
-
-        <label for="lastName">Last Name</label>
-        <input type="text" name="last_name" maxlength="15" required="" id="id_last_name">
-
-        <input type="submit" value="Submit">
-    </form>
-</div>
-
+    <h1>Enter your data</h1>
+    <div class="form">
+        <form method="POST" action="{% url 'home_page' %}">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Save">
+        </form>
     </div>
-    <footer>
+
+</div>
+<footer>
     <div>Python Web Basics Exam Preparation @SoftUni</div>
 </footer>
 
 
-</body></html>
+</body>
+</html>

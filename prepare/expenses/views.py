@@ -5,20 +5,19 @@ from expenses.models import Profile, Expense
 
 
 def home_page(request):
-    e = Expense.objects.all()
-    p = Profile.objects.get(pk=1)
+
     try:
-        test_profile = Profile.objects.all()[0]
+        p = Profile.objects.all()[0]
         expenses = Expense.objects.all()
         return render(request, 'home-with-profile.html', {'expenses': expenses, 'total': p.budget, 'left': p.budget - sum(e.price for e in expenses)})
     except:
+        form = ProfileForm()
         if request.method == 'POST':
-            first_name = request.POST['first_name']
-            last_name = request.POST['last_name']
-            budget = request.POST['budget']
-            Profile.objects.create(first_name=first_name, last_name=last_name, budget=budget)
-            return redirect('home_page')
-        return render(request, 'home-no-profile.html',)
+            form = ProfileForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect('home_page')
+        return render(request, 'home-no-profile.html', {'form': form})
 
 
 def create(request):
@@ -56,13 +55,13 @@ def delete(request, pk):
 
 
 def profile(request):
-    p = Profile.objects.get(pk=1)
+    p = Profile.objects.all()[0]
     expenses = Expense.objects.all()
     return render(request, 'profile.html', {'profile': p, 'left': p.budget - sum(e.price for e in expenses)})
 
 
 def profile_edit(request):
-    p = Profile.objects.get(pk=1)
+    p = Profile.objects.all()[0]
     if request.method == 'GET':
         return render(request, 'profile-edit.html', {'budget': p.budget, 'first_name': p.first_name, 'last_name': p.last_name})
     p.budget = request.POST['budget']
