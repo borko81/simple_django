@@ -1,0 +1,56 @@
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
+    <title>Notes</title>
+</head>
+
+<body>
+<!--navigation bar-->
+<header>
+    <nav>
+        <ul>
+            <li class="img"><img src="{% static 'images/note.png' %}" width="32" height="32"/></li>
+            <li><a href="{% url 'home_page' %}">Notes</a></li>
+            <li class="right">
+                <a href="{% url 'add_note' %}">Add Note</a>
+                <a href="{% url 'profile' %}">Profile</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<!--end navigation bar-->
+
+{% if not notes %}
+    <h1>My Notes</h1>
+
+
+    <h2>There are no notes.</h2>
+
+{% else %}
+    <!--notes container-->
+    {% for note in notes %}
+        <div class="note-container">
+            <h2>{{ note.title }} <img src="{{ note.image_url }}"/></h2>
+
+            <div class="right">
+                <a class="button details" href="{% url 'details_note' note.id %}">Details</a>
+                <a class="button edit" href="{% url 'edit_note' note.id %}">Edit</a>
+                <a class="button delete" href="{% url 'delete_note' note.id %}">Delete</a>
+            </div>
+        </div>
+    {% endfor %}
+
+
+    <!--end notes container-->
+
+{% endif %}
+
+
+<footer>
+    <div>Python Web Basics Exam @SoftUni</div>
+</footer>
+</body>
+</html>
